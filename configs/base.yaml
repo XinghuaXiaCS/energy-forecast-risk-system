@@ -1,0 +1,68 @@
+project_name: yes-forecast-risk-system
+warehouse_path: warehouse/yes_risk_demo.sqlite
+raw_csv_path: data/sample/raw/forecast_risk_raw.csv
+feedback_csv_path: data/sample/raw/feedback_seed.csv
+model_dir: artifacts/models/latest
+report_dir: artifacts/demo_run
+seed: 42
+horizons: [24, 48]
+
+region_exposure_multiplier:
+  CNI: 1.20
+  UNI: 1.00
+  LNI: 1.10
+  LSI: 0.95
+  USI: 0.90
+
+risk_thresholds:
+  medium: 0.35
+  high: 0.55
+  critical: 0.75
+
+impact_thresholds_nzd:
+  medium: 3500
+  high: 8500
+  critical: 16000
+
+# Degraded-data conditions that force the decision layer to fall back to a rule-based
+# score instead of trusting the model output. Any one of these triggers fallback mode.
+fallback:
+  max_missingness_pct: 0.12
+  max_latency_minutes: 120
+  max_input_drift_score: 0.80
+  max_feature_psi: 0.25
+  min_source_health: 0.75
+
+# Weights used by the rule-based fallback score. Sum should be close to 1.0.
+# Ordering roughly reflects operational importance signed off with forecast analysts.
+fallback_weights:
+  model_disagreement: 0.24
+  weather_uncertainty: 0.18
+  load_ramp: 0.16
+  input_drift_score: 0.14
+  analog_miss_rate: 0.12
+  forecast_spread: 0.08
+  missingness_pct: 0.08  # scaled by 4x inside policy to match [0,1] range
+
+# Thresholds for the derived confidence_level flag shown to reviewers.
+confidence_thresholds:
+  high:
+    model_agreement: 0.80
+    data_health: 0.88
+  medium:
+    model_agreement: 0.62
+    data_health: 0.74
+
+retraining:
+  # NOTE: These floors are tuned for the synthetic demo so that a well-trained model
+  # does not trip the retraining flag on the first batch. In a real deployment they
+  # would be set from a validation-year baseline plus operational tolerance.
+  auc_floor: 0.60
+  pr_auc_floor: 0.50
+  max_population_stability_index: 0.30
+  monthly_review_day: 1
+
+batch:
+  analyst_review_cutoff_local: "12:00"
+  report_top_n: 10
+  alert_queue_bands: ["Medium", "High", "Critical"]

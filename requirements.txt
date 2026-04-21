@@ -1,0 +1,15 @@
+pandas>=2.0
+numpy>=1.24
+scikit-learn>=1.3
+scipy>=1.10
+fastapi>=0.110
+uvicorn>=0.29
+pyyaml>=6.0
+matplotlib>=3.8
+joblib>=1.3
+
+# Optional gradient-boosting challengers. If present, they join the champion-
+# challenger registry as `xgb_candidate` / `lgb_candidate`. If missing, the
+# pipeline runs normally with only the sklearn candidates.
+xgboost>=2.0
+lightgbm>=4.0
