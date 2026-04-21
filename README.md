@@ -1,4 +1,4 @@
-# Yes Energy – Forecast Risk Decision Support System
+# Forecast Risk Decision Support System
 
 A production-oriented GitHub project that upgrades a **Forecast Risk Early Warning System** into a fuller **operational forecast risk decision support product** for power market workflows.
 
@@ -236,7 +236,6 @@ This makes the repo easy to run on a plain Python install and easy to extend. In
 
 ---
 
-## Resume-ready framing
 
 A resume or interview version of this project can be framed as:
 
