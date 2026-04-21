@@ -236,7 +236,3 @@ This makes the repo easy to run on a plain Python install and easy to extend. In
 
 ---
 
-
-A resume or interview version of this project can be framed as:
-
-> Built an operational forecast risk decision support system for power market workflows, extending a high-risk day classifier into a production-facing analytics product with calibrated risk bands, expected impact scoring, business-readable reason codes, champion–challenger governance, feedback-informed retraining, and workflow-integrated alerting through API and batch reporting.
